@@ -1,9 +1,13 @@
 import "./App.css";
+import Main from "./components/Main";
 
 function App() {
-  return <div>
-    
-  </div>;
+  return (
+    <div style={{ padding: "50px" }}>
+      <h1 style={{ padding: "20px" }}>Trello</h1>
+      <Main />
+    </div>
+  );
 }
 
 export default App;
