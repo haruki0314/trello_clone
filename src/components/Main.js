@@ -11,7 +11,11 @@ const Main = () => {
         {data.map((section) => (
           <Droppable key={section.id} droppableId={section.id}>
             {(provided) => (
-              <div className="trello-section">
+              <div
+                className="trello-section"
+                ref={provided.innerRef}
+                {...provided.droppableProps}
+              >
                 <div className="trello-section-title">{section.title}</div>
                 <div className="trello-section-content">
                   {section.tasks.map((task, index) => (
@@ -25,12 +29,12 @@ const Main = () => {
                           ref={provided.innerRef}
                           {...provided.draggableProps}
                           {...provided.dragHandleProps}
-                          // style={{
-                          //   ...provided.draggableProps.style,
-                          //   opacity: snapshot.isDragging ? "0.2" : "1",
-                          // }}
+                          style={{
+                            ...provided.draggableProps.style,
+                            opacity: snapshot.isDragging ? "0.5" : "1",
+                          }}
                         >
-                          <Card></Card>
+                          <Card>{task.title}</Card>
                         </div>
                       )}
                     </Draggable>
