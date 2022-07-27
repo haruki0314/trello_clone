@@ -15,10 +15,24 @@ const Main = () => {
                 <div className="trello-section-title">{section.title}</div>
                 <div className="trello-section-content">
                   {section.tasks.map((task, index) => (
-                    <Draggable>
-                      <div>
-                        <Card></Card>
-                      </div>
+                    <Draggable
+                      key={task.id}
+                      draggableId={task.id}
+                      index={index}
+                    >
+                      {(provided, snapshot) => (
+                        <div
+                          ref={provided.innerRef}
+                          {...provided.draggableProps}
+                          {...provided.dragHandleProps}
+                          // style={{
+                          //   ...provided.draggableProps.style,
+                          //   opacity: snapshot.isDragging ? "0.2" : "1",
+                          // }}
+                        >
+                          <Card></Card>
+                        </div>
+                      )}
                     </Draggable>
                   ))}
                 </div>
