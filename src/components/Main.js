@@ -5,8 +5,12 @@ import Card from "./Card";
 
 const Main = () => {
   const [data, setData] = useState(dummyData);
+
+  const onDragend = () => {};
+
   return (
-    <DragDropContext>
+    //required ondragEnd
+    <DragDropContext onDragEnd={onDragend}>
       <div className="trello">
         {data.map((section) => (
           <Droppable key={section.id} droppableId={section.id}>
@@ -19,6 +23,7 @@ const Main = () => {
                 <div className="trello-section-title">{section.title}</div>
                 <div className="trello-section-content">
                   {section.tasks.map((task, index) => (
+                    // <Card key={task.id}>{task.title}</Card>
                     <Draggable
                       key={task.id}
                       draggableId={task.id}
@@ -39,6 +44,7 @@ const Main = () => {
                       )}
                     </Draggable>
                   ))}
+                  {provided.placeholder}
                 </div>
               </div>
             )}
