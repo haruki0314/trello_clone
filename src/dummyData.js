@@ -11,11 +11,11 @@ const dummyData = [
       },
       {
         id: uuidv4(),
-        title: "react学習",
+        title: "2",
       },
       {
         id: uuidv4(),
-        title: "react学習",
+        title: "3",
       },
     ],
   },
@@ -29,11 +29,11 @@ const dummyData = [
       },
       {
         id: uuidv4(),
-        title: "react学習",
+        title: "2-2",
       },
       {
         id: uuidv4(),
-        title: "react学習",
+        title: "2-3",
       },
     ],
   },
@@ -47,11 +47,11 @@ const dummyData = [
       },
       {
         id: uuidv4(),
-        title: "react学習",
+        title: "3-2",
       },
       {
         id: uuidv4(),
-        title: "react学習",
+        title: "3-3",
       },
     ],
   },

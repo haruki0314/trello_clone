@@ -6,11 +6,18 @@ import Card from "./Card";
 const Main = () => {
   const [data, setData] = useState(dummyData);
 
-  const onDragend = () => {};
+  const onDragEnd = (result) => {
+    //source と　destinationが始まりと終わりの情報s
+    console.log(result);
+    const { source, destination } = result;
+    //同じカラムないでのタスク入れ替え
+    const sourceColIndex = data.findIndex((e) => e.id === source.droppableId);
+    console.log(sourceColIndex);
+  };
 
   return (
     //required ondragEnd
-    <DragDropContext onDragEnd={onDragend}>
+    <DragDropContext onDragEnd={onDragEnd}>
       <div className="trello">
         {data.map((section) => (
           <Droppable key={section.id} droppableId={section.id}>
