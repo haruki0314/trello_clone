@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useCallback } from "react";
 import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
 import dummyData from "../dummyData";
 import Card from "./Card";
@@ -7,16 +7,61 @@ const Main = () => {
   const [data, setData] = useState(dummyData);
 
   const onDragEnd = (result) => {
-    //source と　destinationが始まりと終わりの情報s
-    console.log(result);
+    // console.log(result);
+    if (!result.destination) return;
     const { source, destination } = result;
-    //同じカラムないでのタスク入れ替え
-    const sourceColIndex = data.findIndex((e) => e.id === source.droppableId);
-    console.log(sourceColIndex);
+
+    //動かし始めたcolumnが違うcolumnに移動したら
+    if (source.droppableId !== destination.droppableId) {
+      //動かし始めたcolumnの配列の番号を取得()
+      const sourceColIndex = data.findIndex((e) => e.id === source.droppableId);
+      console.log(sourceColIndex);
+      //動かし終わったcolumnの配列の番号を取得()
+      const destinationColIndex = data.findIndex(
+        (e) => e.id === destination.droppableId
+      );
+      console.log(destinationColIndex);
+
+      const sourseCol = data[sourceColIndex];
+      const destinationCol = data[destinationColIndex];
+
+      //動かし始めたタスクに属していたカラムの中のタスクを全て取得
+      //後でsplice関数でその動かし始めたタスクを削除するため
+      //sourceTaskに配列をコピーしておく(破壊操作を後でするため)
+      const sourceTask = [...sourseCol.tasks];
+      console.log(sourceTask);
+
+      //動かし終わったタスクに属していたカラムの中のタスクを全て取得
+      //後でsplice関数でその動かし始めたタスクを追加するため
+      const destinationTask = [...destinationCol.tasks];
+      console.log(destinationTask);
+
+      //前のカラムから削除
+      const [removed] = sourceTask.splice(source.index, 1);
+      //後のカラムに追加
+      destinationTask.splice(destination.index, 0, removed);
+
+      data[sourceColIndex].tasks = sourceTask;
+      data[destinationColIndex].tasks = destinationTask;
+
+      setData(data);
+    } else {
+      //同じカラム内でタスクの入れ替え。
+      const sourceColIndex = data.findIndex((e) => e.id === source.droppableId);
+      const sourseCol = data[sourceColIndex];
+      console.log(sourseCol);
+      const sourceTask = [...sourseCol.tasks];
+      console.log(sourceTask);
+      const [removed] = sourceTask.splice(source.index, 1);
+      sourceTask.splice(destination.index, 0, removed);
+
+      data[sourceColIndex].tasks = sourceTask;
+
+      setData(data);
+    }
   };
 
   return (
-    //required ondragEnd
     <DragDropContext onDragEnd={onDragEnd}>
       <div className="trello">
         {data.map((section) => (
